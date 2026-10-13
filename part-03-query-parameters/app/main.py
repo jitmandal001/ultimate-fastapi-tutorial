@@ -67,6 +67,21 @@ def search_recipes(
     return {"results": list(results)[:max_results]}
 
 
+@api_router.get("/recipe-filter/", status_code=200)
+def filter_recipes(
+    source: Optional[str] = None,
+    max_results: int = 10
+) -> dict:
+    results = RECIPES
+
+    if source:
+        results = [
+            recipe for recipe in results
+            if source.lower() in recipe["source"].lower()
+        ]
+
+    return {"results": results[:max_results]}
+
 app.include_router(api_router)
 
 
