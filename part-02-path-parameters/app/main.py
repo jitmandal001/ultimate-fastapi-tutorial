@@ -47,7 +47,12 @@ def fetch_recipe(*, recipe_id: int) -> dict:
     result = [recipe for recipe in RECIPES if recipe["id"] == recipe_id]
     if result:
         return result[0]
-
+@api_router.get("/recipe/{recipe_id}/info", status_code=200)
+def recipe_info(recipe_id: int) -> dict:
+    return {
+        "recipe_id": recipe_id,
+        "message": f"You requested information for recipe {recipe_id}"
+    }
 
 app.include_router(api_router)
 
